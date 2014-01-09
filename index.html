@@ -1,0 +1,27 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Github Stargazers</title>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+    <div class="input-form">
+        <form action="">
+            <input class="form-control" type="text" name="username" placeholder="Enter a username, hit enter" />
+        </form>
+    </div>
+
+    <div class="repos"></div>
+
+    <script id="repoTemplate" type="text/template">
+    <h2><a href="<%= html_url %>"><%= name %></a></h2>
+    </script>
+    <script id="stargazerTemplate" type="text/template">
+    <a href="<%= url %>"><img src="https://gravatar.com/avatar/<%= gravatar_id %>?size=80" alt="<%= login %>" /></a>
+    </script>
+    <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="js/underscore.js"></script>
+    <script type="text/javascript" src="js/backbone.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
