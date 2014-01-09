@@ -1,5 +1,4 @@
 jQuery(document).ready(function() {
-    var user = 'rcorral';
     var token = '?access_token=19274bf4df1e1656fdb79c213c449561c5e82be2'
 
     jQuery(document).on('submit', 'form', function(e) {
