@@ -1,6 +1,7 @@
 jQuery(document).ready(function() {
     var token = '?access_token=19274bf4df1e1656fdb79c213c449561c5e82be2'
 
+    // Listen on form submit
     jQuery(document).on('submit', 'form', function(e) {
         e.preventDefault();
         var user = jQuery(this).find('input').val(),
@@ -12,23 +13,37 @@ jQuery(document).ready(function() {
         }
 
         var repos = new ReposView({
-            url: 'https://api.github.com/users/' + user + '/repos'
+            url: 'https://api.github.com/users/' + user + '/repos' + token
         });
     });
 
     var StargazersModel = Backbone.Model.extend({
-        initialize: function() {
-            // console.log(this);
-        }
+        initialize: function() {}
     });
 
     var StargazersCollection = Backbone.Collection.extend({
         model: StargazersModel,
         initialize: function(models, options) {
             this.options = options;
+            this.view = this.options.view;
+
+            // Handle pagination
+            this.on('sync', function(model, resp, options) {
+                var match = (options.xhr.getResponseHeader('Link') || '').match(/<(.*?)>; rel="next"/);
+
+                if (match === null) {return;};
+
+                this.next_url = match[1];
+                this.fetch({
+                    success: _.bind(this.fetch_success, this)
+                });
+            });
         },
         url: function() {
-            return this.options.url + token;
+            return this.next_url || this.options.url;
+        },
+        fetch_success: function() {
+            this.view.render();
         }
     });
 
@@ -47,19 +62,16 @@ jQuery(document).ready(function() {
     });
 
     var StargazersView = Backbone.View.extend({
-        el: $(".pics"),
-
         initialize: function(options) {
             var that = this;
 
             this.options = options;
             this.collection = new StargazersCollection([], {
-                url: this.options.url
+                url: this.options.url,
+                view: this
             });
             this.collection.fetch({
-                success: function() {
-                    that.render();
-                }
+                success: _.bind(this.collection.fetch_success, this.collection)
             });
         },
 
@@ -81,8 +93,7 @@ jQuery(document).ready(function() {
     });
 
     var RepoModel = Backbone.Model.extend({
-        initialize: function() {
-        }
+        initialize: function() {}
     });
 
     var ReposCollection = Backbone.Collection.extend({
@@ -91,14 +102,15 @@ jQuery(document).ready(function() {
             this.options = options;
         },
         url: function() {
-            return this.options.url + token;
+            return this.options.url;
         }
     });
 
+    // Single repo view
     var RepoView = Backbone.View.extend({
-        tagName: "article",
-        className: "repo",
-        template: $("#repoTemplate").html(),
+        tagName: 'article',
+        className: 'repo',
+        template: $('#repoTemplate').html(),
 
         render: function() {
             var tmpl = _.template(this.template);
@@ -109,6 +121,7 @@ jQuery(document).ready(function() {
         }
     });
 
+    // All repos view
     var ReposView = Backbone.View.extend({
         el: $(".repos"),
 
@@ -129,19 +142,23 @@ jQuery(document).ready(function() {
             });
         },
 
+        // Render repos
         render: function() {
             var that = this;
 
             _.each(this.collection.models, function(repo) {
-                repo.repo_el = that.renderRepo(repo);
+                var stargazer_view;
 
-                var stargazer_view = new StargazersView({
-                    url: repo.get('stargazers_url'),
-                    el: repo.repo_el
+                var repo_el = that.renderRepo(repo);
+
+                stargazer_view = new StargazersView({
+                    url: repo.get('stargazers_url') + token + '&page=1&per_page=100',
+                    el: repo_el
                 });
             }, this);
         },
 
+        // Render a single repo
         renderRepo: function(repo) {
             var repoView = new RepoView({
                     model: repo
