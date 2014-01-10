@@ -48,9 +48,9 @@ jQuery(document).ready(function() {
     });
 
     var StargazerView = Backbone.View.extend({
-        tagName: "div",
-        className: "stargazer",
-        template: $("#stargazerTemplate").html(),
+        tagName: 'div',
+        className: 'stargazer',
+        template: $('#stargazerTemplate').html(),
 
         render: function() {
             var tmpl = _.template(this.template);
@@ -148,12 +148,11 @@ jQuery(document).ready(function() {
 
             _.each(this.collection.models, function(repo) {
                 var stargazer_view;
-
                 var repo_el = that.renderRepo(repo);
 
                 stargazer_view = new StargazersView({
                     url: repo.get('stargazers_url') + token + '&page=1&per_page=100',
-                    el: repo_el
+                    el: jQuery('.all-stargazers')
                 });
             }, this);
         },
@@ -165,7 +164,7 @@ jQuery(document).ready(function() {
                 }),
                 el = repoView.render().el;
 
-            this.$el.append(el);
+            // this.$el.append(el);
 
             return el;
         }
