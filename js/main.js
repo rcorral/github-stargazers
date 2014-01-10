@@ -13,7 +13,8 @@ jQuery(document).ready(function() {
         }
 
         var repos = new ReposView({
-            url: 'https://api.github.com/users/' + user + '/repos' + token
+            url: 'https://api.github.com/users/' + user + '/repos' + token,
+            el: $('.all-stargazers')
         });
     });
 
@@ -53,8 +54,19 @@ jQuery(document).ready(function() {
         template: $('#stargazerTemplate').html(),
 
         render: function() {
-            var tmpl = _.template(this.template);
+            var tmpl = _.template(this.template),
+                options = [
+                    'slowest',
+                    'slower',
+                    'slow',
+                    'normal',
+                    'fast',
+                    'faster',
+                    'fastest'
+                ],
+                random_key = Math.floor(Math.random() * options.length);
 
+            this.$el.addClass(options[random_key]);
             $(this.el).html(tmpl(this.model.toJSON()));
 
             return this;
@@ -123,8 +135,6 @@ jQuery(document).ready(function() {
 
     // All repos view
     var ReposView = Backbone.View.extend({
-        el: $(".repos"),
-
         initialize: function(options) {
             var that = this;
 
