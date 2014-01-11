@@ -109,7 +109,9 @@ jQuery(document).ready(function() {
                 ],
                 random_key = Math.floor(Math.random() * options.length);
 
+            // Set the twinkle speed
             this.$el.addClass(options[random_key]);
+
             $(this.el).html(tmpl(this.model.toJSON()));
 
             return this;
@@ -141,10 +143,19 @@ jQuery(document).ready(function() {
 
         renderStargazer: function(stargazer) {
             var repoView = new StargazerView({
-                model: stargazer
-            });
+                    model: stargazer
+                }),
+                el = repoView.render().el,
+                avatar = new Image(),
+                avatar_url = stargazer.get('avatar_url');
 
-            stargazers.append(repoView.render().el);
+            // Prefetch avatar
+            avatar.onload = function() {
+                jQuery(el).find('img').attr({src: avatar_url, height: 40, width: 40});
+            };
+            avatar.src = avatar_url;
+
+            stargazers.append(el);
         }
     });
 
