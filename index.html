@@ -1,21 +1,29 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Rafael Corral">
     <title>Github Stargazers</title>
     <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-    <div class="all-stargazers"></div>
+    <div class="banner">
+        <p>
+            <a href="https://github.com/rcorral/github-stargazers">Github stargazers</a> &mdash; Displays avatars of all stargazers on repos for a given github account &mdash;
+            <iframe src="http://ghbtns.com/github-btn.html?user=rcorral&repo=github-stargazers&type=fork&count=true&size=small" allowtransparency="true" frameborder="0" scrolling="0" width="53" height="20"></iframe>
+            <iframe src="http://ghbtns.com/github-btn.html?user=rcorral&type=follow&count=false&size=small" allowtransparency="true" frameborder="0" scrolling="0" width="132" height="20"></iframe>
+        </p>
+    </div>
 
     <div class="input-form-wrapper">
         <div class="input-form">
             <form action="">
-                <input class="form-control" type="text" name="username" placeholder="Enter a username, hit enter" />
+                <input class="form-control" type="text" name="username" placeholder="Enter your github username, hit enter." />
             </form>
         </div>
     </div>
 
-    <div class="repos"></div>
+    <div class="all-stargazers"></div>
 
     <script id="repoTemplate" type="text/template">
     <h2><a href="<%= html_url %>"><%= name %></a></h2>
@@ -23,9 +31,10 @@
     <script id="stargazerTemplate" type="text/template">
     <a href="<%= html_url %>"><img src="https://gravatar.com/avatar/<%= gravatar_id %>?size=40" alt="" data-username="<%= login %>" /></a>
     </script>
-    <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="js/underscore.js"></script>
-    <script type="text/javascript" src="js/backbone.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo-min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

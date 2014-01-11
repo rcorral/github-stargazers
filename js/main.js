@@ -1,6 +1,20 @@
 jQuery(document).ready(function() {
     var token = '?access_token=19274bf4df1e1656fdb79c213c449561c5e82be2'
 
+    var stargazers = {
+        init: function() {
+            this.has_scrolled = false;
+        },
+        scroll: function() {
+            if (this.has_scrolled) {return;}
+
+            if (window.innerHeight < jQuery('.all-stargazers').height()) {
+                jQuery(window).scrollTo(88, 1000);
+                this.has_scrolled = true;
+            }
+        }
+    };
+
     // Listen on form submit
     jQuery(document).on('submit', 'form', function(e) {
         e.preventDefault();
@@ -12,11 +26,14 @@ jQuery(document).ready(function() {
             return;
         }
 
+        stargazers.init();
         var repos = new ReposView({
             url: 'https://api.github.com/users/' + user + '/repos' + token,
             el: $('.all-stargazers')
         });
     });
+
+    /* Stargazers */
 
     var StargazersModel = Backbone.Model.extend({
         initialize: function() {}
@@ -69,6 +86,8 @@ jQuery(document).ready(function() {
             this.$el.addClass(options[random_key]);
             $(this.el).html(tmpl(this.model.toJSON()));
 
+            stargazers.scroll();
+
             return this;
         }
     });
@@ -103,6 +122,8 @@ jQuery(document).ready(function() {
             this.$el.append(repoView.render().el);
         }
     });
+
+    /* Repos */
 
     var RepoModel = Backbone.Model.extend({
         initialize: function() {}

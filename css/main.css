@@ -1,22 +1,69 @@
 body {
   background-color: #111;
+  font-weight: 200;
+  line-height: 1.4;
+  font-size: 16px;
+  font-family: "Helvetica";
+  color: #333;
 }
 
 body > div {
   float: left;
 }
 
-.all-stargazers {
-  margin-bottom: 20px;
+.banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #555;
+  color: #ccc;
+}
+
+.banner p {
+  position: relative;
+  margin: 5px 0;
+  padding-right: 205px;
+  text-align: center;
+}
+
+.banner p a {
+  color: #ccc;
+}
+
+.banner p iframe {
+  position: absolute;
+  margin-left: 10px;
+}
+
+.banner p iframe + iframe {
+  position: absolute;
+  margin-left: 70px;
 }
 
 .input-form-wrapper {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  padding-top: 10px;
   width: 100%;
+  background-color: #222;
 }
 
-.repos, .input-form {
+.all-stargazers {
+  position: absolute;
+  top: 92px;
+  left: 0;
+  margin-bottom: 20px;
+}
+
+.input-form {
   width: 400px;
   margin: 0 auto;
+}
+
+.input-form form {
+  margin-bottom: 12px;
 }
 
 .repo {
@@ -36,6 +83,7 @@ body > div {
   text-decoration: none;
 }
 
+/* Input styles */
 
 .form-control:-moz-placeholder {
   color: #999999;
@@ -62,9 +110,9 @@ body > div {
   line-height: 1.428571429;
   color: #555555;
   vertical-align: middle;
-  background-color: #ffffff;
+  background-color: #111;
   background-image: none;
-  border: 1px solid #cccccc;
+  border: 1px solid #333;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -78,6 +126,8 @@ body > div {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
+
+/* Twinkle animations */
 
 @keyframes move-twink-back {
     0% {opacity: 1;}
