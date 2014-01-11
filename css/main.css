@@ -199,3 +199,32 @@ body > div {
   -webkit-animation:move-twink-back 3s linear infinite;
   animation:move-twink-back 3s linear infinite;
 }
+
+@media (max-width: 878px) {
+  .banner {
+    font-size: 12px;
+  }
+  .input-form-wrapper {
+    top: 27px;
+  }
+}
+
+@media (max-width: 709px) {
+  .banner p {
+    padding-right: 0px;
+  }
+  .banner span {
+    display: block;
+  }
+  .banner p iframe {
+    position: inherit;
+    margin: 5px 0 0 54px;
+  }
+  .banner p iframe + iframe {
+    position: inherit;
+    margin: 0;
+  }
+  .input-form-wrapper {
+    top: 69px;
+  }
+}
