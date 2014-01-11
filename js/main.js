@@ -194,6 +194,11 @@ jQuery(document).ready(function() {
             this.collection.fetch({
                 success: function() {
                     that.render();
+                },
+                error: function(collection, response, options) {
+                    if (response.status === 404) {
+                        alert('Invalid Github username.')
+                    }
                 }
             });
         },
