@@ -1,4 +1,6 @@
 jQuery(document).ready(function() {
+    'use strict';
+
     var token = '?access_token=19274bf4df1e1656fdb79c213c449561c5e82be2'
 
     var stargazers = {
@@ -146,8 +148,15 @@ jQuery(document).ready(function() {
                     model: stargazer
                 }),
                 el = repoView.render().el,
+                domains = [0, 1, 2, 3],
+                random_domain = Math.floor(Math.random() * domains.length),
                 avatar = new Image(),
-                avatar_url = stargazer.get('avatar_url');
+                avatar_url = stargazer.get('avatar_url'),
+                matches = avatar_url.match(/(gravatar\.com.*)$/);
+
+            if (matches !== null && matches[1]) {
+                avatar_url = 'https://' + domains[random_domain] + '.' + matches[1];
+            }
 
             // Prefetch avatar
             avatar.onload = function() {
