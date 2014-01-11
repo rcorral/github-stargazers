@@ -2,8 +2,10 @@ jQuery(document).ready(function() {
     var token = '?access_token=19274bf4df1e1656fdb79c213c449561c5e82be2'
 
     var stargazers = {
+        $append_el: jQuery('.all-stargazers'),
         init: function() {
             this.has_scrolled = false;
+            this.to_append = [];
         },
         scroll: function() {
             if (this.has_scrolled) {return;}
@@ -11,6 +13,23 @@ jQuery(document).ready(function() {
             if (window.innerHeight < jQuery('.all-stargazers').height()) {
                 jQuery(window).scrollTo(88, 1000);
                 this.has_scrolled = true;
+            }
+        },
+        // We don't want to append one by one...too much dom manipulation
+        append: function(html) {
+            this.to_append.push(html);
+            this.trigger_append();
+        },
+        trigger_append: function(force) {
+            // 15 seems like a sweet spot
+            if (this.to_append.length === 15 || force === true) {
+                var docfrag = document.createDocumentFragment();
+                for (var i = 0; i < this.to_append.length; i++) {
+                    docfrag.appendChild(this.to_append[i]);
+                };
+                this.$append_el.append(docfrag);
+                this.to_append = [];
+                this.scroll();
             }
         }
     };
@@ -49,7 +68,14 @@ jQuery(document).ready(function() {
             this.on('sync', function(model, resp, options) {
                 var match = (options.xhr.getResponseHeader('Link') || '').match(/<(.*?)>; rel="next"/);
 
-                if (match === null) {return;};
+                if (match === null) {
+                    // Append any remaining stargazers
+                    if (this.options.last_repo) {
+                        stargazers.trigger_append(true);
+                    }
+
+                    return;
+                }
 
                 this.next_url = match[1];
                 this.fetch({
@@ -86,8 +112,6 @@ jQuery(document).ready(function() {
             this.$el.addClass(options[random_key]);
             $(this.el).html(tmpl(this.model.toJSON()));
 
-            stargazers.scroll();
-
             return this;
         }
     });
@@ -99,7 +123,8 @@ jQuery(document).ready(function() {
             this.options = options;
             this.collection = new StargazersCollection([], {
                 url: this.options.url,
-                view: this
+                view: this,
+                last_repo: this.options.last_repo
             });
             this.collection.fetch({
                 success: _.bind(this.collection.fetch_success, this.collection)
@@ -119,7 +144,7 @@ jQuery(document).ready(function() {
                 model: stargazer
             });
 
-            this.$el.append(repoView.render().el);
+            stargazers.append(repoView.render().el);
         }
     });
 
@@ -177,13 +202,13 @@ jQuery(document).ready(function() {
         render: function() {
             var that = this;
 
-            _.each(this.collection.models, function(repo) {
+            _.each(this.collection.models, function(repo, i) {
                 var stargazer_view;
                 var repo_el = that.renderRepo(repo);
 
                 stargazer_view = new StargazersView({
                     url: repo.get('stargazers_url') + token + '&page=1&per_page=100',
-                    el: jQuery('.all-stargazers')
+                    last_repo: i === (that.collection.models.length - 1)
                 });
             }, this);
         },
