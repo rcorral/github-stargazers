@@ -2,7 +2,7 @@ About
 =====
 This is a Backbone.js app. Built just for fun.  
 It displays the avatars of all users who have starred Github repos for a given user.  
-[http://rcorral.github.io/github-stargazers/](http://rcorral.github.io/github-stargazers/)
+Demo: [http://rcorral.github.io/github-stargazers/](http://rcorral.github.io/github-stargazers/)
 
 Development
 ===========
