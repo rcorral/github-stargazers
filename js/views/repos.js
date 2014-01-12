@@ -32,6 +32,7 @@ define('views/repos', ['collections/repos', 'views/stargazers', 'views/repo', 's
                 var stargazer_view;
                 var repo_el = that.renderRepo(repo);
 
+                // Init load of stargazers
                 stargazer_view = new StargazersView({
                     url: repo.get('stargazers_url') + stargazers.token + '&page=1&per_page=100',
                     last_repo: i === (that.collection.models.length - 1)

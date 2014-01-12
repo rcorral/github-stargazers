@@ -3,9 +3,11 @@ define('collections/repos', ['models/repo'], function(RepoModel) {
 
     var ReposCollection = Backbone.Collection.extend({
         model: RepoModel,
+
         initialize: function(models, options) {
             this.options = options;
         },
+
         url: function() {
             return this.options.url;
         }
