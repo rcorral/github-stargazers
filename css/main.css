@@ -52,7 +52,7 @@ body > div {
 
 .all-stargazers {
   position: absolute;
-  top: 92px;
+  top: 88px;
   left: 0;
   margin-bottom: 20px;
 }
@@ -207,6 +207,9 @@ body > div {
   .input-form-wrapper {
     top: 27px;
   }
+  .all-stargazers {
+    top: 83px;
+  }
 }
 
 @media (max-width: 709px) {
@@ -227,11 +230,20 @@ body > div {
   .input-form-wrapper {
     top: 69px;
   }
+  .all-stargazers {
+    top: 125px;
+  }
 }
 
 
 @media (max-width: 402px) {
   .banner {
     font-size: 10px;
+  }
+  .input-form-wrapper {
+    top: 67px;
+  }
+  .all-stargazers {
+    top: 123px;
   }
 }
