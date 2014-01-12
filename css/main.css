@@ -58,7 +58,7 @@ body > div {
 }
 
 .input-form {
-  width: 400px;
+  max-width: 400px;
   margin: 0 auto;
 }
 
@@ -226,5 +226,12 @@ body > div {
   }
   .input-form-wrapper {
     top: 69px;
+  }
+}
+
+
+@media (max-width: 402px) {
+  .banner {
+    font-size: 10px;
   }
 }
