@@ -16,7 +16,8 @@ require(['views/repos', 'stargazers'], function(ReposView, stargazers) {
                 alert('Enter a user...');
                 return;
             }
- 
+
+            jQuery('.form-control').blur();
             stargazers.init();
             var repos = new ReposView({
                 url: 'https://api.github.com/users/' + user + '/repos' + stargazers.token,
