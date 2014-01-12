@@ -1,7 +1,8 @@
 About
 =====
 This is a Backbone.js app. Built just for fun.  
-It displays the avatars of users who have liked repos for a user.
+It displays the avatars of users who have liked repos for a user.  
+[https://github.com/rcorral/github-stargazers/](https://github.com/rcorral/github-stargazers/)
 
 Development
 ===========

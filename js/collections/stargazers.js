@@ -3,6 +3,7 @@ define('collections/stargazers', ['models/stargazer', 'stargazers'], function(St
 
     var StargazersCollection = Backbone.Collection.extend({
         model: StargazerModel,
+
         initialize: function(models, options) {
             this.options = options;
             this.view = this.options.view;
@@ -20,15 +21,18 @@ define('collections/stargazers', ['models/stargazer', 'stargazers'], function(St
                     return;
                 }
 
+                // Fetch next page
                 this.next_url = match[1];
                 this.fetch({
                     success: _.bind(this.fetch_success, this)
                 });
             });
         },
+
         url: function() {
             return this.next_url || this.options.url;
         },
+
         fetch_success: function() {
             this.view.render();
         }

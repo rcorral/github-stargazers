@@ -19,6 +19,7 @@ define('views/stargazers', ['collections/stargazers', 'views/stargazer', 'starga
         render: function() {
             var that = this;
 
+            // Render each stargazer
             _.each(this.collection.models, function(stargazer) {
                 that.renderStargazer(stargazer);
             }, this);
@@ -28,23 +29,9 @@ define('views/stargazers', ['collections/stargazers', 'views/stargazer', 'starga
             var repoView = new StargazerView({
                     model: stargazer
                 }),
-                el = repoView.render().el,
-                domains = [0, 1, 2, 3],
-                random_domain = Math.floor(Math.random() * domains.length),
-                avatar = new Image(),
-                avatar_url = stargazer.get('avatar_url'),
-                matches = avatar_url.match(/(gravatar\.com.*)$/);
+                el = repoView.render().el;
 
-            if (matches !== null && matches[1]) {
-                avatar_url = 'https://' + domains[random_domain] + '.' + matches[1];
-            }
-
-            // Prefetch avatar
-            avatar.onload = function() {
-                jQuery(el).find('img').attr({src: avatar_url, height: 40, width: 40});
-            };
-            avatar.src = avatar_url;
-
+            stargazers.prefech_image(el, stargazer.get('avatar_url'));
             stargazers.append(el);
         }
     });

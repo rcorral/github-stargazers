@@ -9,14 +9,18 @@ require(['views/repos', 'stargazers'], function(ReposView, stargazers) {
         // Listen on form submit
         jQuery(document).on('submit', 'form', function(e) {
             e.preventDefault();
-            var user = jQuery(this).find('input').val(),
+            var $input = jQuery(this).find('input'),
+                user = $input.val().toLowerCase(),
                 repos;
-
+ 
+            // Make the text inside the input field lowercase, just for looks
+            $input.val(user);
             if (!user) {
                 alert('Enter a user...');
                 return;
             }
 
+            // Initialize the search
             jQuery('.form-control').blur();
             stargazers.init();
             var repos = new ReposView({
