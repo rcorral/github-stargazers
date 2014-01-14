@@ -2,7 +2,7 @@ define('stargazers', function() {
     'use strict';
 
     var stargazers = {
-        token: '?access_token=19274bf4df1e1656fdb79c213c449561c5e82be2',
+        token: '?access_token=10838b19e7632b67bde25802235eac0e559ec8a2',
         $append_el: jQuery('.all-stargazers'),
         avatar_queue: {},
 
